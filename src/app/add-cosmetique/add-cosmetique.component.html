@@ -1,0 +1,28 @@
+<html>
+    <div class="container">
+        <div>
+            <h2>Ajouter un article :</h2>
+        </div>
+        <form >
+            <div class="col-sm-2 col-md-2 col-lg-2">
+            <label >ID article</label>
+            <input type="text" [(ngModel)]= "newArticle.idarticle" name="idarticle" class="form-control">
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4" >
+            <label >Nom article</label>
+            <input type="text" [(ngModel)]= "newArticle.nomarticle" name="nomarticle" class="form-control">
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2">
+            <label >Prix article</label>
+            <input type="number" [(ngModel)]= "newArticle.prixarticle" name="prixarticle" class="form-control">
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+            <label >Date création</label>
+            <input type="date" [(ngModel)]= "newArticle.dateCreation" name="dateCreation" class="form-control">
+            </div>
+            <div class="mt-2">
+                <button type="submit" (click)= "addArticle()" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+    </div>    
+</html>
