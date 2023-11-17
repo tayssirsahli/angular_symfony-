@@ -5,7 +5,7 @@
                 <table  class="table table-striped">
                     
                     <thead>
-                        <tr> <th>Id</th><th>Nom</th> <th>Prix</th> <th>Date Création</th><th>Catégorie</th> </tr>
+                        <tr> <th>Id</th><th>Nom</th> <th>Prix</th> <th>Date Création</th><th>type</th> </tr>
                     </thead>
                     <tbody *ngFor= "let element of cosmetiques">
                         <tr >
@@ -14,9 +14,9 @@
                             <td>{{element.prixarticle}}</td>
                             <td>{{element.dateCreation | date:'dd/MM/yyyy'}}</td>
                             <td>{{element.Classification.nomClas}}</td>
-                            <td><a class="btn btn-danger" (click) = "supprimerArticle_cosmetique(element)">Supprimer</a></td>
-                            <td><a class="btn btn-success" [routerLink]="['/update-article-cosmetique',element.idarticle]">Modifier</a></td>
-                            </tr>
+                            <td><a *ngIf= "authService.isAdmin()"class="btn btn-danger" (click)="supprimerArticle_cosmetique(element)">Supprimer</a></td>
+                            <td><a *ngIf= "authService.isAdmin()" class="btn btn-success" [routerLink]="['/update-article-cosmetique',element.idarticle]">Modifier</a></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

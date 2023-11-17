@@ -24,7 +24,9 @@ export class AddCosmetiqueComponent implements OnInit{
     private router :Router,
     private articleService: ArticleService) { }
     
-    ngOnInit(): void {this.Classifications= this.articleService.listeclassifications();}
+    ngOnInit(): void {
+      this.Classifications= this.articleService.listeclassifications();
+    }
 
     addArticle(){
      

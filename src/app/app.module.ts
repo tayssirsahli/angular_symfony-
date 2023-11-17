@@ -7,6 +7,8 @@ import { CosmetiquesComponent } from './cosmetiques/cosmetiques.component';
 import {AddCosmetiqueComponent }from './add-cosmetique/add-cosmetique.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateArticleCosmetiqueComponent } from './update-article-cosmetique/update-article-cosmetique.component';
+import { LoginComponent } from './login/login.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 
 
@@ -16,7 +18,9 @@ import { UpdateArticleCosmetiqueComponent } from './update-article-cosmetique/up
     AppComponent,
     CosmetiquesComponent,
     AddCosmetiqueComponent,
-    UpdateArticleCosmetiqueComponent
+    UpdateArticleCosmetiqueComponent,
+    LoginComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

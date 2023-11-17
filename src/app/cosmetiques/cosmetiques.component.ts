@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { article } from '../model/article.model';
 import { ArticleService  } from '../services/article.service';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-cosmetiques',
   templateUrl: './cosmetiques.component.html'
@@ -9,8 +11,10 @@ export class CosmetiquesComponent implements OnInit {
 
   cosmetiques : article[];
 
-  constructor(private ArticleService: ArticleService  ) {
-  this.cosmetiques = ArticleService.listeArticleCosmetique();
+  constructor(private ArticleService : ArticleService,
+              public authService: AuthService,
+              private router:Router) { 
+      this.cosmetiques = ArticleService.listeArticleCosmetique();
   
   }
   supprimerArticle_cosmetique(A :article)
