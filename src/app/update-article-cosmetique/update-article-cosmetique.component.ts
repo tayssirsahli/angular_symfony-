@@ -20,19 +20,24 @@ export class UpdateArticleCosmetiqueComponent implements OnInit{
     private router :Router,
     private articleService: ArticleService) { }
     
-    ngOnInit() {
-      // console.log(this.route.snapshot.params.id);
-      this.Classifications= this.articleService.listeclassifications();
-      this.currentArticle = this.articleService.consulterArticle(this.activatedRoute.snapshot. params['id']);
-      this.updatedClasId=this.currentArticle.Classification.idClas;
+
+    ngOnInit(): void {
+      this.articleService.listeclassifications().
+      subscribe(cats => {this.Classifications = cats;
+      console.log(cats);
+      });
+      this.articleService.consulterArticle(this.activatedRoute.snapshot.params['id']).subscribe( arts =>{ this.currentArticle = arts; 
+        this.updatedClasId = this.currentArticle.classification.idClas;
+      } ) ;
       }
-      updateArticle_cosmetique()
-      {
-        this.currentArticle.Classification =this.articleService.consulterclassification(this.updatedClasId);
-        this.articleService.updateArticle_cosmetique(this.currentArticle);
-        this.router.navigate(['cosmetiques']);
-      } 
-    
+
+      updateArticle_cosmetique() {
+        this.currentArticle.classification = this.Classifications.find(clas => clas.idClas == this.updatedClasId)!;
+        this.articleService.updateArticle_cosmetique(this.currentArticle).subscribe(prod => {
+          this.router.navigate(['cosmetiques']); }
+        );
+        }
+  
       
     }
     

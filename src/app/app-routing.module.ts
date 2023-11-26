@@ -6,6 +6,8 @@ import { AddCosmetiqueComponent } from './add-cosmetique/add-cosmetique.componen
 import { UpdateArticleCosmetiqueComponent } from './update-article-cosmetique/update-article-cosmetique.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { CosmetiqueGuard } from './cosmetique.guard';
+import {RechercheParClasstficationComponent} from './recherche-par-classtfication/recherche-par-classtfication.component';
+import { RechercheParNomComponent } from './recherche-par-nom/recherche-par-nom.component';
 
 
 
@@ -15,7 +17,9 @@ const routes: Routes = [
   {path: "add-cosmetique", component : AddCosmetiqueComponent, canActivate:[CosmetiqueGuard] },
   {path: "update-article-cosmetique/:id", component: UpdateArticleCosmetiqueComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'forbidden', component: ForbiddenComponent},
+  {path: 'app-forbidden', component: ForbiddenComponent},
+  {path: "rechercheParClassification", component : RechercheParClasstficationComponent},
+  {path: "rechercheParNom", component : RechercheParNomComponent},
   { path: "", redirectTo: "cosmetiques", pathMatch: "full" }
 
 

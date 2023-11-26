@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { NgIfContext } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   title = 'cosmetique';
+loginLink: TemplateRef<NgIfContext<Boolean>> | null | undefined;
   constructor (public authService: AuthService,
                 private router:Router) {}
 

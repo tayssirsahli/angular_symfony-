@@ -9,7 +9,7 @@ export class AuthService {
 
   
 users: User[] = [{"username":"admin","password":"123","roles":['ADMIN']},
-                {"username":"nadhem","password":"123","roles":['USER']} ];
+                {"username":"Tayssir","password":"123","roles":['USER']} ];
 
 public loggedUser!:string;                    
 public isloggedIn: Boolean = false;

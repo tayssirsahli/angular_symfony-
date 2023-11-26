@@ -8,27 +8,33 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './cosmetiques.component.html'
 })
 export class CosmetiquesComponent implements OnInit {
+  
+  cosmetiques !: article[];
+  
 
-  cosmetiques : article[];
-
-  constructor(private ArticleService : ArticleService,
+  constructor(private articleService : ArticleService,
               public authService: AuthService,
               private router:Router) { 
-      this.cosmetiques = ArticleService.listeArticleCosmetique();
-  
+          this.chargerArticle_cosmetiques();
+
+              }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
-  supprimerArticle_cosmetique(A :article)
-  {
-    //console.log(A);
-    
+  
+
+  chargerArticle_cosmetiques(){
+    this.articleService.listeArticleCosmetique().subscribe(arts => {
+    console.log(arts);
+    this.cosmetiques= arts;
+    }); 
+    }
+  supprimerArticle_cosmetique(A: article) {
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
-      this.ArticleService.supprimerArticle_cosmetique(A);
-
-
+      this.articleService.supprimerArticle_cosmetique(A.idarticle).subscribe(() => {
+        console.log("article cosmeti supprimé");
+        this.chargerArticle_cosmetiques();
+      });
   }
-  ngOnInit(): void {
-    
-  }
- 
 }

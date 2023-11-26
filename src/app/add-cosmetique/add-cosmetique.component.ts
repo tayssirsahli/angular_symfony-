@@ -25,15 +25,22 @@ export class AddCosmetiqueComponent implements OnInit{
     private articleService: ArticleService) { }
     
     ngOnInit(): void {
-      this.Classifications= this.articleService.listeclassifications();
-    }
+      this.articleService.listeclassifications().
+      subscribe(clas => {this.Classifications = clas;
+      console.log(clas);
+      });
+      }
+      
 
-    addArticle(){
-     
-      console.log(this.newIdClas);
-      this.newClassification=this.articleService.consulterclassification(this.newIdClas);
-      this.newArticle.Classification = this.newClassification;
-      this.articleService.ajouterArticleCosmetique(this.newArticle);
+  addArticle() {
+    this.newArticle.classification = this.Classifications.find(cat => cat.idClas == this.newIdClas)!;
+    this.articleService.ajouterArticleCosmetique(this.newArticle).subscribe(arts => {
+      console.log(arts);
       this.router.navigate(['cosmetiques']);
-    }
+    });
+  }
+        
+    
+      
+   
 }

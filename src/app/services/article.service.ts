@@ -1,6 +1,12 @@
+import { Classification } from './../model/classification.model';
+import { RechercheParClasstficationComponent } from './../recherche-par-classtfication/recherche-par-classtfication.component';
 import { Injectable } from '@angular/core';
 import { article } from '../model/article.model';
-import { Classification } from "../model/classification.model";
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+const httpOptions = {
+  headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+};
 
 
 @Injectable({
@@ -8,11 +14,15 @@ import { Classification } from "../model/classification.model";
 })
 export class ArticleService {
 
-  cosmetiques : article[]; 
-  classifications : Classification[];
+  apiURL: string = 'http://localhost:8090/cosmetiques/api';
+  apiURL_class: string = 'http://localhost:8090/cosmetiques/clas';
 
-  constructor() {
-  
+  cosmetiques !: article[]; 
+  classifications! : Classification[];
+ 
+
+  constructor(private http : HttpClient) {
+  /*
     this.classifications = [ {idClas : 1,nomClas : "Maquillage"},
                             {idClas : 2, nomClas : "Soins de la peau"},
                             {idClas : 3, nomClas : "Soins capillaires"},
@@ -26,61 +36,78 @@ export class ArticleService {
     { idarticle: 2, nomarticle: "SVR sebiaclear gel moussant 200 ml", prixarticle: 30, dateCreation: new Date("2020-12-17"), Classification : {idClas : 2, nomClas : "Soins de la peau"}},
     { idarticle: 3, nomarticle: "Kit Lissage Protein&Collagen 115 ml", prixarticle: 109, dateCreation: new Date("2021-06-29"), Classification : {idClas : 2, nomClas : "Soins capillaires"}},
     { idarticle: 4, nomarticle: "SVR hydraliane crème hydratante riche 40 Ml", prixarticle: 46, dateCreation: new Date("2020-02-20"), Classification : {idClas : 2, nomClas : "Soins de la peau"}}
-  ];
+  ]; */
   }
-  listeArticleCosmetique():article[] {
-    return this.cosmetiques;
-  }
-  ajouterArticleCosmetique( article_COS: article){
-    this.cosmetiques.push(article_COS);
-  }
-  supprimerArticle_cosmetique( A : article){
-    
-    const index = this.cosmetiques.indexOf(A, 0);
-    if (index > -1) {
-    this.cosmetiques.splice(index, 1);
+
+  listeArticleCosmetique(): Observable<article[]>{
+    return this.http.get<article[]>(this.apiURL);
     }
-   
-    }
-    article! : article;
-    consulterArticle(id:number): article{
-      this.article = this.cosmetiques.find(A=> A.idarticle == id)!;
-      return this.article;
+  ajouterArticleCosmetique( article_COS: article):Observable<article>{
+      return this.http.post<article>(this.apiURL, article_COS, httpOptions);
       }
       
-      trierArticle_cosmetique() {
-        this.cosmetiques= this.cosmetiques.sort((n1, n2) => {
-          if (n1 && n2 && n1.idarticle && n2.idarticle) {
-            if (n1.idarticle > n2.idarticle) {
-              return 1;
-            }
-            if (n1.idarticle < n2.idarticle) {
-              return -1;
-            }
-            return 0;
-          }
-          return 0; 
-        });
-        
-      }
-      updateArticle_cosmetique(A : article)
-      {
-        // console.log(A);
-        this.supprimerArticle_cosmetique(A);
-        this.ajouterArticleCosmetique(A);
-        this.trierArticle_cosmetique();
-       
-      }
-      listeclassifications():Classification[] {
-        return this.classifications;
+  supprimerArticle_cosmetique(id: number) {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.delete(url, httpOptions);
+  }
+  
+  article!: article;
+
+  consulterArticle(id: number): Observable<article> {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.get<article>(url);
+    }
+  
+
+  trierArticle_cosmetique() {
+    this.cosmetiques = this.cosmetiques.sort((n1, n2) => {
+      if (n1 && n2 && n1.idarticle && n2.idarticle) {
+        if (n1.idarticle > n2.idarticle) {
+          return 1;
         }
-      consulterclassification(id:number): Classification{ 
-          return this.classifications.find(clas => clas.idClas == id)!;
-          }
-          
-          
-        
-}
+        if (n1.idarticle < n2.idarticle) {
+          return -1;
+        }
+        return 0;
+      }
+      return 0;
+    });
+
+  }
+  updateArticle_cosmetique(arts: article): Observable<article> {
+    return this.http.put<article>(this.apiURL, arts, httpOptions);
+  }
+ 
+  listeclassifications():Observable<Classification[]>{
+    return this.http.get<Classification[]>(this.apiURL+"/clas");
+    }
+   
+  rechercheParClasstfication(idClas: number): Observable<article[]> {
+    const url = `${this.apiURL}/cosmetiqueClas/${idClas}`;
+    return this.http.get<article[]>(url);
+  }
+  
+  consulterClassification(id: number): Classification {
+    const classificationTrouvee = this.classifications.find(clas => clas.idClas == id);
+    if (classificationTrouvee) {
+      return classificationTrouvee;
+    } else {
+      throw new Error(`Classification non trouvée pour l'ID : ${id}`);
+    }
+  }
+  
+  rechercherParNom(nom: string):Observable< article[]> {
+    const url = `${this.apiURL}/cosmetiqueByName/${nom}`;
+    return this.http.get<article[]>(url);
+    }
+    
+    
+  }
+  
+  
+  
+  
+         
 
   
 

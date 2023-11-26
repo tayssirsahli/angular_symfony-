@@ -4,8 +4,8 @@
             <h2>Ajouter un article :</h2>
         </div>
         <form >
-            <div class="col-sm-2 col-md-2 col-lg-2">
-            <label >ID article</label>
+            <div hidden class="col-sm-2 col-md-2 col-lg-2">
+            <label>ID article</label>
             <input type="text" [(ngModel)]= "newArticle.idarticle" name="idarticle" class="form-control">
             </div>
             <div class="col-sm-4 col-md-4 col-lg-4" >
@@ -27,7 +27,7 @@
                         {{clas.nomClas}}
                     </option>
                 </select>
-            </div>
+            </div> 
                 
             <div class="mt-2">
                 <button type="submit" (click)= "addArticle()" class="btn btn-success">Ajouter</button>

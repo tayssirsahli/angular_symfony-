@@ -5,7 +5,7 @@ export class article {
     nomarticle!: string;
     prixarticle!: number;
     dateCreation!: Date;
-    Classification!:Classification;
+    classification!:Classification;
 }
 
     
