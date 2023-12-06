@@ -15,11 +15,11 @@ export class CosmetiquesComponent implements OnInit {
   constructor(private articleService : ArticleService,
               public authService: AuthService,
               private router:Router) { 
-          this.chargerArticle_cosmetiques();
+          //this.chargerArticle_cosmetiques();
 
               }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.chargerArticle_cosmetiques();
   }
   
 
@@ -33,7 +33,7 @@ export class CosmetiquesComponent implements OnInit {
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
       this.articleService.supprimerArticle_cosmetique(A.idarticle).subscribe(() => {
-        console.log("article cosmeti supprimé");
+        console.log("article cosmetique supprimé");
         this.chargerArticle_cosmetiques();
       });
   }

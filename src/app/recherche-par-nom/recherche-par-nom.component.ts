@@ -29,7 +29,7 @@ export class RechercheParNomComponent implements OnInit {
     }
   onKeyUp(filterText: string) {
     this.cosmetiques = this.AllCosmetique.filter(item =>
-      item.nomarticle.toLowerCase().includes(filterText));
+      item.nomarticle.toLowerCase().includes(filterText.toLowerCase()));
   }
 
     

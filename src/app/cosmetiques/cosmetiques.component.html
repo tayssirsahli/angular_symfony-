@@ -13,8 +13,8 @@
                             <td>{{element.nomarticle}}</td>
                             <td>{{element.prixarticle}}</td>
                             <td>{{element.dateCreation | date:'dd/MM/yyyy'}}</td>
-                            <td>{{element.classification?.nomClas}}</td>
-                            <td><a *ngIf= "authService.isAdmin()"class="btn btn-danger" (click)="supprimerArticle_cosmetique(element)">Supprimer</a></td>
+                            <td>{{element.classification.nomClas}}</td>
+                            <td><a *ngIf= "authService.isAdmin()"class="btn btn-danger" (click)= "supprimerArticle_cosmetique(element)">Supprimer</a></td>
                             <td><a *ngIf= "authService.isAdmin()" class="btn btn-success" [routerLink]="['/update-article-cosmetique',element.idarticle]">Modifier</a></td>
                         </tr>
                     </tbody>

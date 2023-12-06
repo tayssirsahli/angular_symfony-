@@ -33,7 +33,7 @@ export class AddCosmetiqueComponent implements OnInit{
       
 
   addArticle() {
-    this.newArticle.classification = this.Classifications.find(cat => cat.idClas == this.newIdClas)!;
+    this.newArticle.classification = this.Classifications.find(clas => clas.idClas == this.newIdClas)!;
     this.articleService.ajouterArticleCosmetique(this.newArticle).subscribe(arts => {
       console.log(arts);
       this.router.navigate(['cosmetiques']);

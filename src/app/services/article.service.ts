@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { Classification } from './../model/classification.model';
 import { RechercheParClasstficationComponent } from './../recherche-par-classtfication/recherche-par-classtfication.component';
 import { Injectable } from '@angular/core';
@@ -15,13 +16,14 @@ const httpOptions = {
 export class ArticleService {
 
   apiURL: string = 'http://localhost:8090/cosmetiques/api';
-  apiURL_class: string = 'http://localhost:8090/cosmetiques/clas';
+  apiURL_class: string = 'http://localhost:8090/cosmetiques/api/clas';
 
   cosmetiques !: article[]; 
   classifications! : Classification[];
  
 
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient,
+              private authService : AuthService) {
   /*
     this.classifications = [ {idClas : 1,nomClas : "Maquillage"},
                             {idClas : 2, nomClas : "Soins de la peau"},
@@ -39,24 +41,37 @@ export class ArticleService {
   ]; */
   }
 
-  listeArticleCosmetique(): Observable<article[]>{
-    return this.http.get<article[]>(this.apiURL);
-    }
+  listeArticleCosmetique(): Observable<article[]> {
+      let jwt = this.authService.getToken();
+      jwt = "Bearer "+jwt;
+      let httpHeaders = new HttpHeaders({"Authorization":jwt})
+      return this.http.get<article[]>(this.apiURL+"/all",{headers:httpHeaders});
+  }
   ajouterArticleCosmetique( article_COS: article):Observable<article>{
-      return this.http.post<article>(this.apiURL, article_COS, httpOptions);
-      }
+    let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    return this.http.post<article>(this.apiURL+"/addcos", article_COS, {headers:httpHeaders});
+      
+  }
       
   supprimerArticle_cosmetique(id: number) {
-    const url = `${this.apiURL}/${id}`;
-    return this.http.delete(url, httpOptions);
+    const url = `${this.apiURL}/delcos/${id}`;
+    let jwt = this.authService.getToken();
+    jwt = "Bearer "+jwt;
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    return this.http.delete(url, {headers:httpHeaders});
   }
   
   article!: article;
 
   consulterArticle(id: number): Observable<article> {
-    const url = `${this.apiURL}/${id}`;
-    return this.http.get<article>(url);
-    }
+    const url = `${this.apiURL}/getbyid/${id}`;
+    let jwt = this.authService.getToken();
+    jwt = "Bearer " + jwt;
+    let httpHeaders = new HttpHeaders({ "Authorization": jwt })
+    return this.http.get<article>(url, { headers: httpHeaders });
+  }
   
 
   trierArticle_cosmetique() {
@@ -75,16 +90,25 @@ export class ArticleService {
 
   }
   updateArticle_cosmetique(arts: article): Observable<article> {
-    return this.http.put<article>(this.apiURL, arts, httpOptions);
+    let jwt = this.authService.getToken();
+    jwt = "Bearer " + jwt;
+    let httpHeaders = new HttpHeaders({ "Authorization": jwt })
+    return this.http.put<article>(this.apiURL + "/updatecos", arts, { headers: httpHeaders });
   }
  
   listeclassifications():Observable<Classification[]>{
-    return this.http.get<Classification[]>(this.apiURL+"/clas");
+    let jwt = this.authService.getToken();
+    jwt = "Bearer "+ jwt;
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    return this.http.get<Classification[]>(this.apiURL_class,{headers:httpHeaders});
     }
    
   rechercheParClasstfication(idClas: number): Observable<article[]> {
+    let jwt = this.authService.getToken();
+    jwt = "Bearer "+ jwt;
+    let httpHeaders = new HttpHeaders({"Authorization":jwt})
     const url = `${this.apiURL}/cosmetiqueClas/${idClas}`;
-    return this.http.get<article[]>(url);
+    return this.http.get<article[]>(url,{headers:httpHeaders});
   }
   
   consulterClassification(id: number): Classification {
@@ -97,9 +121,13 @@ export class ArticleService {
   }
   
   rechercherParNom(nom: string):Observable< article[]> {
+    
     const url = `${this.apiURL}/cosmetiqueByName/${nom}`;
     return this.http.get<article[]>(url);
     }
+    ajouterClassification( clas: Classification):Observable<Classification>{
+      return this.http.post<Classification>(this.apiURL_class, clas, httpOptions);
+      }
     
     
   }

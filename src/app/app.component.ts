@@ -16,14 +16,9 @@ loginLink: TemplateRef<NgIfContext<Boolean>> | null | undefined;
 
 
   ngOnInit() {
-    let isloggedin: string = localStorage.getItem('isloggedIn') || '';
-    let loggedUser: string = localStorage.getItem('loggedUser') || '';
-
-    if (isloggedin !== 'true' || !loggedUser) {
+    this.authService.loadToken();
+    if (this.authService.getToken() == null || this.authService.isTokenExpired())
       this.router.navigate(['/login']);
-    } else {
-      this.authService.setLoggedUserFromLocalStorage(loggedUser);
-    }
   }
                 
                   
