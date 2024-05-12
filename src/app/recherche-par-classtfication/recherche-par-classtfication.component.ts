@@ -1,43 +1,34 @@
-import { Classification } from './../model/classification.model';
+import { CosmetiqueService } from './../services/Cosmetique.service';
 import { Component, OnInit } from '@angular/core';
-import { article } from '../model/article.model';
-import { ArticleService } from '../services/article.service';
+import { Cosmetique } from '../model/Cosmetique.model';
+import { Classification } from '../model/classification.model';
 
 @Component({
   selector: 'app-recherche-par-classtfication',
   templateUrl: './recherche-par-classtfication.component.html',
 })
 export class RechercheParClasstficationComponent implements OnInit {
-  cosmetiques!: article[];
-  IdClassification!: number;
-  classifications!: Classification[];
-  NomClassification!: string ;
+  cosmetiques: Cosmetique[] = [];
+  IdClassification: number | undefined;
+  classifications: Classification[] = [];
+  NomClassification: string = '';
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private cosmetiqueService: CosmetiqueService) {}
 
   ngOnInit(): void {
-    this.articleService.listeclassifications().subscribe(response => {
+    this.cosmetiqueService.listerClassifications().subscribe(response => {
       this.classifications = response;
-      console.log(this.classifications);
     });
   }
 
-  onChange() {
+  onChange(): void {
     if (this.IdClassification !== undefined && !isNaN(this.IdClassification)) {
-      this.articleService.rechercheParClasstfication(this.IdClassification)
-        .subscribe(arts => {
-          this.cosmetiques = arts;
+      this.cosmetiqueService.rechercheParClassification(this.IdClassification)
+        .subscribe(cosmetiques => {
+          this.cosmetiques = cosmetiques;
         });
     } else {
       console.error('IdClassification is not a valid number. Cannot make the request.');
     }
-  }
-  
-      
+  }  
 }
-
-
- 
-
-  
-

@@ -3,15 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CosmetiquesComponent } from './cosmetiques/cosmetiques.component';
-import {AddCosmetiqueComponent }from './add-cosmetique/add-cosmetique.component';
+import { AddCosmetiqueComponent } from './add-cosmetique/add-cosmetique.component';
 import { FormsModule } from '@angular/forms';
-import { UpdateArticleCosmetiqueComponent } from './update-article-cosmetique/update-article-cosmetique.component';
 import { LoginComponent } from './login/login.component';
+import { UpdateCosmetiqueComponent } from './update-cosmetique/update-cosmetique.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RechercheParClasstficationComponent } from './recherche-par-classtfication/recherche-par-classtfication.component';
 import { SearchFilterPipe } from './search-filter.pipe';
 import { RechercheParNomComponent } from './recherche-par-nom/recherche-par-nom.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
+
+
 
 
 
@@ -21,7 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     CosmetiquesComponent,
     AddCosmetiqueComponent,
-    UpdateArticleCosmetiqueComponent,
+    UpdateCosmetiqueComponent,
     LoginComponent,
     ForbiddenComponent,
     RechercheParClasstficationComponent,
@@ -34,7 +37,13 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

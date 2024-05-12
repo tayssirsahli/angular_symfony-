@@ -1,36 +1,37 @@
 <html>
     <div class="container">
         <div>
-            <h2>Ajouter un article :</h2>
+            <h2>Ajouter un produit cosmétique :</h2>
         </div>
         <form >
             <div hidden class="col-sm-2 col-md-2 col-lg-2">
-            <label>ID article</label>
-            <input type="text" [(ngModel)]= "newArticle.idarticle" name="idarticle" class="form-control">
+            <label>ID cosmétique</label>
+            <input type="text" [(ngModel)]= "newCosmetique.idCosmetique" name="idCosmetique" class="form-control">
             </div>
             <div class="col-sm-4 col-md-4 col-lg-4" >
-            <label >Nom article</label>
-            <input type="text" [(ngModel)]= "newArticle.nomarticle" name="nomarticle" class="form-control">
+            <label >Nom cosmétique</label>
+            <input type="text" [(ngModel)]= "newCosmetique.nomCosmetique" name="nomCosmetique" class="form-control">
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2">
-            <label >Prix article</label>
-            <input type="number" [(ngModel)]= "newArticle.prixarticle" name="prixarticle" class="form-control">
+            <label >Prix cosmétique</label>
+            <input type="number" [(ngModel)]= "newCosmetique.prixCosmetique" name="prixCosmetique" class="form-control">
             </div>
             <div class="col-sm-4 col-md-4 col-lg-4">
             <label >Date création</label>
-            <input type="date" [(ngModel)]= "newArticle.dateCreation" name="dateCreation" class="form-control">
+            <input type="date" [(ngModel)]= "newCosmetique.dateCreation" name="dateCreation" class="form-control">
             </div>
             <div class="col-sm-4 col-md-4 col-lg-4">
                 <label>Classification</label>
-                <select class="form-control form-control-lg" id="idCat" name="idCat" [(ngModel)]= "newIdClas">
-                    <option *ngFor= "let clas of Classifications" [value]= "clas.idClas">
-                        {{clas.nomClas}}
+                <select class="form-control form-control-lg" id="idClas" name="idClas" [(ngModel)]="newIdClas">
+                    <option *ngFor="let classification of Classifications" [value]="classification.idClas">
+                        {{ classification.nomClas }}
                     </option>
                 </select>
-            </div> 
+            </div>
+            
                 
             <div class="mt-2">
-                <button type="submit" (click)= "addArticle()" class="btn btn-success">Ajouter</button>
+                <button type="submit" (click)= "addCosmetique()" class="btn btn-success">Ajouter</button>
             </div>
         </form>
     </div>    

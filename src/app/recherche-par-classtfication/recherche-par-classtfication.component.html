@@ -18,11 +18,11 @@
                     </thead>
                     <tbody *ngFor= "let element of cosmetiques">
                         <tr >
-                            <td>{{element.idarticle}}</td>
-                            <td>{{element.nomarticle}}</td>
-                            <td>{{element.prixarticle}}</td>
+                            <td>{{element.idCosmetique}}</td>
+                            <td>{{element.nomCosmetique}}</td>
+                            <td>{{element.prixCosmetique}}</td>
                             <td>{{element.dateCreation | date:'dd/MM/yyyy'}}</td>
-                            <td>{{element.classification?.nomClas}}</td>
+                            <td>{{element.classification.nomClas}}</td>
                            <!--  <td><a *ngIf= "authService.isAdmin()"class="btn btn-danger" (click)="supprimerArticle_cosmetique(element)">Supprimer</a></td>
                             <td><a *ngIf= "authService.isAdmin()" class="btn btn-success" [routerLink]="['/update-article-cosmetique',element.idarticle]">Modifier</a></td> -->
                         </tr>

@@ -22,8 +22,9 @@ export class AuthService {
   public isloggedIn: Boolean = false;
   public roles!: string[];
 
-  constructor(private router: Router,
-    private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) {
+    this.loadToken();
+  }
 
   login(user: User) {
     return this.http.post<User>(this.apiURL + '/login', user, { observe: 'response' });
@@ -60,8 +61,7 @@ export class AuthService {
   loadToken() {
     this.token = localStorage.getItem('jwt')!;
     this.decodeJWT();
-    }
-
+  }
   isTokenExpired(): Boolean {
     return this.helper.isTokenExpired(this.token);
   }

@@ -1,0 +1,37 @@
+<div class="container">
+    <div>
+        <h2>Modifier un Cosmetique :</h2>
+    </div>
+    <form (ngSubmit)="updateCosmetique()">
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>ID Cosmetique</label>
+            <input readonly type="text" [(ngModel)]="currentCosmetique.idCosmetique" name="idCosmetique"
+                class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Nom Cosmetique</label>
+            <input type="text" [(ngModel)]="currentCosmetique.nomCosmetique" name="nomCosmetique" class="form-control">
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>Prix Cosmetique</label>
+            <input type="number" [(ngModel)]="currentCosmetique.prixCosmetique" name="prixCosmetique"
+                class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Date création</label>
+            <input type="date" [ngModel]="currentCosmetique.dateCreation | date: 'yyyy-MM-dd'"
+                (ngModelChange)="currentCosmetique.dateCreation = $event" name="dateCreation" class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Classification</label>
+            <select class="form-control form-control-lg" id="idCat" name="idCat" [(ngModel)]="updatedClasId">
+                <option *ngFor="let clas of classifications" [value]="clas.idClas">
+                    {{clas.nomClas}}
+                </option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Modifier</button>
+        </div>
+    </form>
+</div>

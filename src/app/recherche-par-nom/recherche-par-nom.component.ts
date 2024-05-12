@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { article } from '../model/article.model';
-import { ArticleService } from '../services/article.service';
+import { Cosmetique } from '../model/Cosmetique.model';
+import { CosmetiqueService } from '../services/Cosmetique.service';
 import { Classification } from '../model/classification.model';
 
 @Component({
@@ -9,29 +9,32 @@ import { Classification } from '../model/classification.model';
 })
 export class RechercheParNomComponent implements OnInit {
   
+  cosmetiques!: Cosmetique[];
+  nomCosmetique!: string;
+  classifications!: Classification[];
+  searchTerm!: string;
+  AllCosmetique!: Cosmetique[];
   
-  cosmetiques!: article[];
-  nomarticle !: string;
-  classifications !: Classification[] ;
-  searchTerm!:string;
-  AllCosmetique! : article[];
-  constructor(private articleService: ArticleService) {}
+  constructor(private cosmetiqueService: CosmetiqueService) {}
+  
   ngOnInit(): void {
-    this.articleService.listeArticleCosmetique().subscribe(arts => {
-      console.log(arts);
-      this.cosmetiques = arts;
-      });
+    this.cosmetiqueService.listeCosmetiques().subscribe(cosmetiques => { 
+      console.log(cosmetiques);
+      this.cosmetiques = cosmetiques;
+      this.AllCosmetique = cosmetiques; // Initialisation de AllCosmetique
+    });
   }
-  rechercherArticle(){
-    this.articleService.rechercherParNom(this.nomarticle).subscribe(arts => {
-      this.cosmetiques = arts; 
-      console.log(arts)});
-    }
+  
+  rechercherCosmetique() {
+    this.cosmetiqueService.rechercherParNom(this.nomCosmetique).subscribe(cosmetiques => { 
+      this.cosmetiques = cosmetiques; 
+      this.AllCosmetique = cosmetiques; // Mise à jour de AllCosmetique avec les résultats de recherche
+      console.log(cosmetiques);
+    });
+  }
+  
   onKeyUp(filterText: string) {
     this.cosmetiques = this.AllCosmetique.filter(item =>
-      item.nomarticle.toLowerCase().includes(filterText.toLowerCase()));
+      item.nomCosmetique.toLowerCase().includes(filterText.toLowerCase()));
   }
-
-    
-    
 }

@@ -1,40 +1,41 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { article } from '../model/article.model';
-import { ArticleService  } from '../services/article.service';
+import { Cosmetique } from '../model/Cosmetique.model';
+import { CosmetiqueService } from '../services/Cosmetique.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router'; // Import Router from @angular/router
+
 @Component({
   selector: 'app-cosmetiques',
   templateUrl: './cosmetiques.component.html'
 })
 export class CosmetiquesComponent implements OnInit {
   
-  cosmetiques !: article[];
-  
+  cosmetiques!: Cosmetique[]; // Corrected type to Cosmetique[]
 
-  constructor(private articleService : ArticleService,
-              public authService: AuthService,
-              private router:Router) { 
-          //this.chargerArticle_cosmetiques();
+  constructor(
+    private cosmetiqueService: CosmetiqueService, // Changed service name to CosmetiqueService
+    public authService: AuthService,
+    private router: Router
+  ) { }
 
-              }
   ngOnInit(): void {
-    this.chargerArticle_cosmetiques();
+    this.chargerCosmetiques(); // Changed method name
   }
-  
 
-  chargerArticle_cosmetiques(){
-    this.articleService.listeArticleCosmetique().subscribe(arts => {
-    console.log(arts);
-    this.cosmetiques= arts;
+  chargerCosmetiques() { // Changed method name
+    this.cosmetiqueService.listeCosmetiques().subscribe(cosmetiques => { // Changed method name and service method name
+      console.log(cosmetiques);
+      this.cosmetiques = cosmetiques;
     }); 
-    }
-  supprimerArticle_cosmetique(A: article) {
+  }
+
+  supprimerCosmetique(cosmetique: Cosmetique) { // Changed parameter type to Cosmetique
     let conf = confirm("Etes-vous sûr ?");
-    if (conf)
-      this.articleService.supprimerArticle_cosmetique(A.idarticle).subscribe(() => {
-        console.log("article cosmetique supprimé");
-        this.chargerArticle_cosmetiques();
+    if (conf) {
+      this.cosmetiqueService.supprimerCosmetique(cosmetique.idCosmetique).subscribe(() => { // Changed method name and parameter name
+        console.log("Cosmetique supprimé"); // Changed log message
+        this.chargerCosmetiques();
       });
+    }
   }
 }
