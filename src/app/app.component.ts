@@ -9,7 +9,7 @@ import { NgIfContext } from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'cosmetique';
+  title = 'biblio';
 loginLink: TemplateRef<NgIfContext<Boolean>> | null | undefined;
   constructor (public authService: AuthService,
                 private router:Router) {}

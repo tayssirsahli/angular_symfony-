@@ -8,7 +8,7 @@ export class SearchFilterPipe implements PipeTransform {
   transform(list: any[], filterText: string): any {
     console.log('transforming');
     return list ? list.filter(item =>
-    item.nomCosmetique.toLowerCase().includes(filterText)) : [];
+    item.nomLivre.toLowerCase().includes(filterText)) : [];
     }
     
     

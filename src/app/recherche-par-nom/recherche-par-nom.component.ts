@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Cosmetique } from '../model/Cosmetique.model';
-import { CosmetiqueService } from '../services/Cosmetique.service';
-import { Classification } from '../model/classification.model';
+import { Livre } from '../model/Livre.model';
+import { LivreService } from '../services/Livre.service';
+import { Auteur } from '../model/auteur.model';
 
 @Component({
   selector: 'app-recherche-par-nom',
@@ -9,32 +9,32 @@ import { Classification } from '../model/classification.model';
 })
 export class RechercheParNomComponent implements OnInit {
   
-  cosmetiques!: Cosmetique[];
-  nomCosmetique!: string;
-  classifications!: Classification[];
+  livres!: Livre[];
+  nomLivre!: string;
+  auteur!: Auteur[];
   searchTerm!: string;
-  AllCosmetique!: Cosmetique[];
+  allLivres!: Livre[];
   
-  constructor(private cosmetiqueService: CosmetiqueService) {}
+  constructor(private livreService: LivreService) {}
   
   ngOnInit(): void {
-    this.cosmetiqueService.listeCosmetiques().subscribe(cosmetiques => { 
-      console.log(cosmetiques);
-      this.cosmetiques = cosmetiques;
-      this.AllCosmetique = cosmetiques; // Initialisation de AllCosmetique
+    this.livreService.listeLivres().subscribe(livres => { 
+      console.log(livres);
+      this.livres = livres;
+      this.allLivres = livres; // Initialisation de allLivres
     });
   }
   
-  rechercherCosmetique() {
-    this.cosmetiqueService.rechercherParNom(this.nomCosmetique).subscribe(cosmetiques => { 
-      this.cosmetiques = cosmetiques; 
-      this.AllCosmetique = cosmetiques; // Mise à jour de AllCosmetique avec les résultats de recherche
-      console.log(cosmetiques);
+  rechercherLivre() {
+    this.livreService.rechercherParNom(this.nomLivre).subscribe(livres => { 
+      this.livres = livres; 
+      this.allLivres = livres; // Mise à jour de allLivres avec les résultats de recherche
+      console.log(livres);
     });
   }
   
   onKeyUp(filterText: string) {
-    this.cosmetiques = this.AllCosmetique.filter(item =>
-      item.nomCosmetique.toLowerCase().includes(filterText.toLowerCase()));
+    this.livres = this.allLivres.filter(item =>
+      item.nomLivre.toLowerCase().includes(filterText.toLowerCase()));
   }
 }

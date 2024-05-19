@@ -17,13 +17,13 @@ export class TokenInterceptor implements HttpInterceptor {
     const toExclude = "/login";
     //tester s'il sagit de login, on n'ajoute pas le header Authorization
     //puisqu'on a pas encode de JWT (il est null)
-    if (request.url.search(toExclude) === -1) {
+   // if (request.url.search(toExclude) === -1) {
       let jwt = this.authService.getToken();
       let reqWithToken = request.clone({
         setHeaders: { Authorization: "Bearer " + jwt }
       })
       return next.handle(reqWithToken);
-    }
+    //}
     return next.handle(request);
   }
 }
