@@ -24,7 +24,7 @@
                         <td>{{element.nomLivre}}</td>
                         <td>{{element.prixLivre}}</td>
                         <td>{{element.dateCreation | date:'dd/MM/yyyy'}}</td>
-                        <td>{{element.auteur?.nomClas}}</td>
+                        <td>{{element.auteur.nomAuteur}}</td>
                         <!--  <td><a *ngIf="authService.isAdmin()" class="btn btn-danger" (click)="supprimerArticle_livre(element)">Supprimer</a></td>
                         <td><a *ngIf="authService.isAdmin()" class="btn btn-success" [routerLink]="['/update-article-livre', element.idLivre]">Modifier</a></td> -->
                     </tr>
